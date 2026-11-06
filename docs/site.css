@@ -20,7 +20,7 @@ header{position:sticky;top:0;z-index:5;background:rgba(13,22,38,.85);backdrop-fi
 .nav .links{margin-left:auto;display:flex;gap:22px;font-size:15px}
 .nav .links a{color:var(--muted)}
 .nav .links a:hover{color:var(--text);text-decoration:none}
-@media (max-width:640px){.nav .links a:not(.gh){display:none}}
+@media (max-width:640px){.nav .links a:not(.gh):not(.lang){display:none}}
 /* hero */
 .hero{position:relative;overflow:hidden;padding:88px 0 72px}
 .hero::before{content:"";position:absolute;inset:0;opacity:.06;
@@ -109,3 +109,6 @@ a.zoom:hover img{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.4
 #lb img{display:block;max-width:96vw;max-height:90vh;width:auto;height:auto;border-radius:12px;border:1px solid var(--line);cursor:zoom-out}
 .lb-close{position:absolute;top:-14px;right:-14px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--surface-2);color:var(--text);font-size:24px;line-height:1;cursor:pointer}
 @media (max-width:600px){.lb-close{top:8px;right:8px}}
+/* selettore lingua */
+.nav .links a.lang{border:1px solid var(--line);border-radius:999px;padding:2px 12px;font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--text)}
+.nav .links a.lang:hover{border-color:var(--amber);color:var(--amber)}

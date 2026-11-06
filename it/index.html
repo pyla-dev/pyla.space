@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PYLA — Protect Your Local Access · firewall per Ubuntu</title>
+<meta name="description" content="Interfaccia grafica open source per il firewall di Ubuntu: set di regole con anteprima e rollback, verifica dell'esposizione sul kernel, hardening basato sulle CVE. Rust + Tauri. Nessun account, nessuna telemetria.">
+<meta property="og:title" content="PYLA — Protect Your Local Access">
+<meta property="og:description" content="Firewall open source per Ubuntu: set di regole, verifica dell'esposizione sul kernel, hardening basato sulle CVE.">
+<meta property="og:image" content="https://pyla.space/docs/og-image.png">
+<meta property="og:url" content="https://pyla.space/it/">
+<meta property="og:locale" content="it_IT">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="canonical" href="https://pyla.space/it/">
+<link rel="alternate" hreflang="en" href="https://pyla.space/">
+<link rel="alternate" hreflang="it" href="https://pyla.space/it/">
+<link rel="alternate" hreflang="x-default" href="https://pyla.space/">
+<link rel="stylesheet" href="../docs/site.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="shield" viewBox="0 0 24 24">
+      <path d="M12 2.5 19.5 5.3V11c0 4.8-3.1 8.9-7.5 10.2C7.6 19.9 4.5 15.8 4.5 11V5.3z" fill="#ffb95c" stroke="#ffb95c" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M8.7 14.6v-4.6a3.3 3.3 0 0 1 6.6 0v4.6M12 14.6V9M9 17.2h6" fill="none" stroke="#0d1626" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top"><svg><use href="#shield"/></svg>PYLA</a>
+    <nav class="links">
+      <a href="#features">Funzionalità</a>
+      <a href="#screens">Screenshots</a>
+      <a href="#how">Come funziona</a>
+      <a href="#install">Installazione</a>
+      <a href="security.html">Sicurezza</a>
+      <a class="gh" href="https://github.com/pyla-dev/pyla">GitHub</a>
+      <a class="lang" href="../" hreflang="en" lang="en" title="English">EN</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">πύλαι — <b>"le porte"</b> · open source · MIT</span>
+        <h1 class="acro"><span>P</span>rotect <span>Y</span>our <span>L</span>ocal <span>A</span>ccess</h1>
+        <p class="lead">Un'interfaccia grafica per il firewall di Ubuntu che rende <strong>visibile la postura di rete a livello di kernel</strong>:
+          cosa è in ascolto, cosa è esposto, cosa non avrebbe mai dovuto esserlo — in una schermata, in linguaggio semplice.</p>
+        <div class="cta">
+          <a class="btn primary" href="https://github.com/pyla-dev/pyla/releases/latest">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+            Scarica il .deb</a>
+          <a class="btn ghost" href="https://github.com/pyla-dev/pyla">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7 3 12l5 5M16 7l5 5-5 5M14 4l-4 16"/></svg>
+            Sorgenti su GitHub</a>
+        </div>
+        <p class="meta">Ubuntu 26.04 · amd64 · Rust + Tauri 2 · Nessun account, nessuna telemetria, nessun cloud</p>
+      </div>
+      <div class="mark"><svg viewBox="0 0 24 24"><use href="#shield"/></svg></div>
+    </div>
+  </div>
+
+  <section id="features">
+    <div class="wrap">
+      <h2>La verità del kernel, resa leggibile</h2>
+      <p class="sub"><code>ufw</code> è potente, ma vive in un terminale di cui pochi hanno le chiavi.
+        PYLA non reinventa il firewall: legge e guida il motore <code>ufw</code> / nftables che è già nel tuo kernel.</p>
+      <div class="grid">
+        <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7M17 15l3 3-3 3"/></svg></div>
+          <h3>Set di regole, non comandi sparsi</h3><p>Anteprima delle differenze esatte, applicazione atomica, rollback automatico se il risultato non corrisponde.</p></div>
+        <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 4v3M12 17v3M4 12h3M17 12h3"/></svg></div>
+          <h3>Verifica dell'esposizione</h3><p>Ogni servizio in ascolto valutato contro le regole attive nel kernel — IPv4 e IPv6 separatamente, con la regola che decide.</p></div>
+        <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/></svg></div>
+          <h3>Ruleset nftables dal vivo</h3><p>Vista in sola lettura di ciò che il kernel applica davvero: UFW, Docker, libvirt e ogni altra tabella.</p></div>
+        <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V6z"/><path d="M12 8v5M12 16v.5"/></svg></div>
+          <h3>Attento alle CVE</h3><p>Le CVE aperte del kernel dalla Ubuntu Security API, confrontate con il kernel che stai davvero usando.</p></div>
+        <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.7"/><path d="M4 4v4h4"/></svg></div>
+          <h3>Mitigazioni reversibili</h3><p>Dove un sottosistema si può spegnere in sicurezza, un clic lo blinda finché arriva la patch — e un clic lo ripristina.</p></div>
+        <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+          <h3>Privilegi minimi</h3><p>L'interfaccia non gira mai come root. Un piccolo helper polkit esegue solo comandi in lista — mai una shell.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="screens">
+    <div class="wrap">
+      <h2>Guardalo</h2>
+      <p class="sub">Schermate reali di PYLA su Ubuntu 26.04. Gli indirizzi sono stati sostituiti con intervalli di documentazione.</p>
+      <figure class="shot main"><a class="zoom" href="../docs/screens/it/rule-sets-full.webp"><img src="../docs/screens/it/rule-sets.webp" width="1600" height="1103" alt="Editor dei set di regole: regole ordinate con interruttori, anteprima e applica" loading="lazy"></a><figcaption>Set di regole — abilita, riordina, guarda le differenze, applica con rollback automatico.</figcaption></figure>
+      <div class="shots">
+        <figure class="shot"><a class="zoom" href="../docs/screens/it/kernel-ruleset-full.webp"><img src="../docs/screens/it/kernel-ruleset.webp" width="1600" height="1103" alt="Vista in sola lettura del ruleset nftables completo del kernel con contatori" loading="lazy"></a><figcaption>Il ruleset completo del kernel, con i contatori dal vivo.</figcaption></figure>
+        <figure class="shot"><a class="zoom" href="../docs/screens/it/cve-list-full.webp"><img src="../docs/screens/it/cve-list.webp" width="1600" height="1103" alt="CVE del kernel aperte confrontate con il kernel in uso, con mitigazioni" loading="lazy"></a><figcaption>CVE del kernel rispetto al kernel in uso, con mitigazioni a un clic.</figcaption></figure>
+        <figure class="shot"><a class="zoom" href="../docs/screens/it/cve-watch-full.webp"><img src="../docs/screens/it/cve-watch.webp" width="1600" height="1103" alt="CVE seguite con stato, CVSS e versione correttiva" loading="lazy"></a><figcaption>CVE seguite: stato, CVSS, versione con la correzione.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <h2>Come funziona</h2>
+      <p class="sub">Separazione rigorosa dei privilegi: l'unica parte che gira come root è piccola, verificabile e limitata a comandi in lista.</p>
+      <figure class="shot arch"><a class="zoom" href="../docs/architecture.png"><img src="../docs/architecture.png" width="2480" height="1120" alt="Architettura: l'interfaccia di PYLA nella sessione utente usa SQLite e la Ubuntu Security API e chiama pyla-helper come root tramite pkexec e polkit; l'helper guida ufw, nft e sysctl/modprobe" loading="lazy"></a></figure>
+      <div class="flow">
+        <div class="step"><span class="tag">Il tuo utente</span><h3>App PYLA</h3>
+          <p>Rust + Tauri 2. Set di regole in un database SQLite locale, anteprima delle differenze, viste di esposizione e CVE.</p></div>
+        <div class="arrow"><svg viewBox="0 0 24 24"><path d="M4 12h15M14 7l5 5-5 5"/></svg></div>
+        <div class="step"><span class="tag">polkit</span><h3>Autorizzazione</h3>
+          <p>Azione dedicata <code>space.pyla.app.helper</code>: tu approvi, il sistema decide.</p></div>
+        <div class="arrow"><svg viewBox="0 0 24 24"><path d="M4 12h15M14 7l5 5-5 5"/></svg></div>
+        <div class="step"><span class="tag">root</span><h3>pyla-helper</h3>
+          <p>JSON in ingresso e in uscita. Percorsi assoluti, ambiente ripulito. Guida <code>ufw</code>, legge <code>nft</code>, scrive file sysctl / modprobe chiaramente marcati.</p></div>
+      </div>
+      <p class="note">L'unica richiesta verso l'esterno è una lettura dalla Ubuntu Security API per la vista CVE. I backup delle tue regole restano in <code>/var/lib/pyla/backups</code>.</p>
+    </div>
+  </section>
+
+  <section id="install">
+    <div class="wrap">
+      <h2>Installazione</h2>
+      <p class="sub">Un pacchetto autosufficiente con l'app, l'helper privilegiato, la policy polkit e il lanciatore.</p>
+      <div class="install">
+        <div class="card"><h3>Pacchetto precompilato (consigliato)</h3>
+<pre><span class="c"># Ubuntu 26.04, amd64</span>
+curl -LO https://github.com/pyla-dev/pyla/releases/latest/download/pyla_0.2.1_amd64.deb
+curl -LO https://github.com/pyla-dev/pyla/releases/latest/download/pyla_0.2.1_amd64.deb.sha256
+sha256sum -c pyla_0.2.1_amd64.deb.sha256   <span class="c"># deve stampare OK</span>
+sudo apt install ./pyla_0.2.1_amd64.deb</pre></div>
+        <div class="card"><h3>Dai sorgenti</h3>
+<pre>git clone https://github.com/pyla-dev/pyla.git
+cd pyla
+cargo test                         <span class="c"># niente root, niente rete</span>
+cargo build --release
+sudo packaging/install-helper.sh   <span class="c"># helper + policy polkit</span>
+packaging/install-desktop.sh       <span class="c"># lanciatore, senza sudo</span></pre></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Noioso di proposito</h2>
+      <p class="sub">È uno strumento di sicurezza: deve essere prevedibile e verificabile.</p>
+      <div class="pills">
+        <span class="pill">Licenza <b>MIT</b></span>
+        <span class="pill">Nessun account</span>
+        <span class="pill">Nessuna telemetria</span>
+        <span class="pill">Nessun cloud</span>
+        <span class="pill">Interfaccia in italiano e inglese</span>
+        <span class="pill">Anteprima — <a href="https://github.com/pyla-dev/pyla/issues">i feedback sono benvenuti</a></span>
+      </div>
+      <blockquote>Le Porte Calde non erano mura più alte — erano sapere esattamente dove sono le porte, e chi le attraversa.</blockquote>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top"><svg><use href="#shield"/></svg>PYLA</a>
+    <span>© 2026 The PYLA Project Authors · MIT</span>
+    <nav>
+      <a href="https://github.com/pyla-dev/pyla">GitHub</a>
+      <a href="https://github.com/pyla-dev/pyla/releases">Releases</a>
+      <a href="security.html">Sicurezza e ISO 27001</a>
+      <a href="../privacy.html">Privacy (EN)</a>
+      <a href="https://www.linkedin.com/company/pyla-space">LinkedIn</a>
+    </nav>
+  </div>
+</footer>
+<dialog id="lb" aria-label="Visualizzatore immagini">
+  <button class="lb-close" aria-label="Chiudi" autofocus>&times;</button>
+  <img alt="">
+</dialog>
+<script>
+(() => {
+  const lb = document.getElementById('lb'), img = lb.querySelector('img');
+  if (!lb.showModal) return;                       // browser senza <dialog>: il link apre l'immagine
+  document.querySelectorAll('a.zoom').forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = a.querySelector('img');
+    img.src = a.href; img.alt = t.alt;
+    lb.showModal();
+  }));
+  lb.addEventListener('click', () => lb.close());  // clic ovunque chiude (anche sulla x)
+  lb.addEventListener('close', () => { img.removeAttribute('src'); });
+})();
+</script>
+</body>
+</html>
