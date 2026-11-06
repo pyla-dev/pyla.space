@@ -209,6 +209,7 @@ thead th small{display:block;color:var(--muted);font-weight:400;letter-spacing:0
         </table>
       </div>
       <p class="small">ISO and IEC are trademarks of their respective owners. ISO/IEC 27001 text is not reproduced here; refer to the standard for the normative wording of each control.</p>
+      <figure class="shot evidence"><a class="zoom" href="docs/screens/history-full.webp"><img src="docs/screens/history.webp" width="1600" height="1103" alt="PYLA apply history: timestamp, rule set, result and message for each apply" loading="lazy"></a><figcaption><strong>Evidence example — A.8.32 / A.8.15:</strong> the apply history records when each rule set was applied, the result and the outcome message.</figcaption></figure>
     </div>
   </section>
 </main>
@@ -225,5 +226,23 @@ thead th small{display:block;color:var(--muted);font-weight:400;letter-spacing:0
     </nav>
   </div>
 </footer>
+<dialog id="lb" aria-label="Image viewer">
+  <button class="lb-close" aria-label="Close" autofocus>&times;</button>
+  <img alt="">
+</dialog>
+<script>
+(() => {
+  const lb = document.getElementById('lb'), img = lb.querySelector('img');
+  if (!lb.showModal) return;                       // browser senza <dialog>: il link apre l'immagine
+  document.querySelectorAll('a.zoom').forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = a.querySelector('img');
+    img.src = a.href; img.alt = t.alt;
+    lb.showModal();
+  }));
+  lb.addEventListener('click', () => lb.close());  // clic ovunque chiude (anche sulla x)
+  lb.addEventListener('close', () => { img.removeAttribute('src'); });
+})();
+</script>
 </body>
 </html>
