@@ -37,6 +37,17 @@ No accounts. No telemetry. No cloud.
 
 ## Install
 
+**Prebuilt package (Ubuntu 26.04, amd64):** grab the `.deb` from
+[the latest release](https://github.com/pyla-dev/pyla/releases/latest) — it ships the app, the privileged
+helper, the polkit policy, the desktop entry and the icons.
+
+```sh
+curl -LO https://github.com/pyla-dev/pyla/releases/latest/download/pyla_0.2.0_amd64.deb
+curl -LO https://github.com/pyla-dev/pyla/releases/latest/download/pyla_0.2.0_amd64.deb.sha256
+sha256sum -c pyla_0.2.0_amd64.deb.sha256          # must print "OK" before installing
+sudo apt install ./pyla_0.2.0_amd64.deb
+```
+
 The code lives in [`pyla-dev/pyla`](https://github.com/pyla-dev/pyla). Requirements: Ubuntu with
 UFW + nftables, `polkit`, and for building from source a stable Rust toolchain plus the
 [Tauri 2 prerequisites](https://tauri.app/start/prerequisites/).
