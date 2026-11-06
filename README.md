@@ -42,10 +42,10 @@ No accounts. No telemetry. No cloud.
 helper, the polkit policy, the desktop entry and the icons.
 
 ```sh
-curl -LO https://github.com/pyla-dev/pyla/releases/latest/download/pyla_0.2.0_amd64.deb
-curl -LO https://github.com/pyla-dev/pyla/releases/latest/download/pyla_0.2.0_amd64.deb.sha256
-sha256sum -c pyla_0.2.0_amd64.deb.sha256          # must print "OK" before installing
-sudo apt install ./pyla_0.2.0_amd64.deb
+curl -LO https://github.com/pyla-dev/pyla/releases/latest/download/pyla_0.2.1_amd64.deb
+curl -LO https://github.com/pyla-dev/pyla/releases/latest/download/pyla_0.2.1_amd64.deb.sha256
+sha256sum -c pyla_0.2.1_amd64.deb.sha256          # must print "OK" before installing
+sudo apt install ./pyla_0.2.1_amd64.deb
 ```
 
 The code lives in [`pyla-dev/pyla`](https://github.com/pyla-dev/pyla). Requirements: Ubuntu with
