@@ -61,3 +61,5 @@ Forks and pull requests welcome. Open an issue first for anything bigger than a 
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+Copyright (c) 2026 The PYLA Project Authors.
