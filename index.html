@@ -89,11 +89,11 @@
     <div class="wrap">
       <h2>See it</h2>
       <p class="sub">Real screens from PYLA on Ubuntu 26.04 (Italian UI; English is one click away). Addresses replaced with documentation ranges.</p>
-      <figure class="shot main"><img src="docs/screens/rule-sets.webp" width="1600" height="1103" alt="Rule set editor: ordered rules with enable toggles, preview and apply" loading="lazy"><figcaption>Rule sets — enable, reorder, preview the diff, apply with automatic rollback.</figcaption></figure>
+      <figure class="shot main"><a class="zoom" href="docs/screens/rule-sets-full.webp"><img src="docs/screens/rule-sets.webp" width="1600" height="1103" alt="Rule set editor: ordered rules with enable toggles, preview and apply" loading="lazy"></a><figcaption>Rule sets — enable, reorder, preview the diff, apply with automatic rollback.</figcaption></figure>
       <div class="shots">
-        <figure class="shot"><img src="docs/screens/kernel-ruleset.webp" width="1600" height="1103" alt="Read-only view of the full kernel nftables ruleset with counters" loading="lazy"><figcaption>The full kernel ruleset, with live counters.</figcaption></figure>
-        <figure class="shot"><img src="docs/screens/cve-list.webp" width="1600" height="1103" alt="Open kernel CVEs checked against the running kernel, with mitigations" loading="lazy"><figcaption>Kernel CVEs vs. the kernel you run, with one-click mitigations.</figcaption></figure>
-        <figure class="shot"><img src="docs/screens/cve-watch.webp" width="1600" height="1103" alt="Watched CVEs with status, CVSS and fix version" loading="lazy"><figcaption>Watched CVEs: status, CVSS, fixed version.</figcaption></figure>
+        <figure class="shot"><a class="zoom" href="docs/screens/kernel-ruleset-full.webp"><img src="docs/screens/kernel-ruleset.webp" width="1600" height="1103" alt="Read-only view of the full kernel nftables ruleset with counters" loading="lazy"></a><figcaption>The full kernel ruleset, with live counters.</figcaption></figure>
+        <figure class="shot"><a class="zoom" href="docs/screens/cve-list-full.webp"><img src="docs/screens/cve-list.webp" width="1600" height="1103" alt="Open kernel CVEs checked against the running kernel, with mitigations" loading="lazy"></a><figcaption>Kernel CVEs vs. the kernel you run, with one-click mitigations.</figcaption></figure>
+        <figure class="shot"><a class="zoom" href="docs/screens/cve-watch-full.webp"><img src="docs/screens/cve-watch.webp" width="1600" height="1103" alt="Watched CVEs with status, CVSS and fix version" loading="lazy"></a><figcaption>Watched CVEs: status, CVSS, fixed version.</figcaption></figure>
       </div>
     </div>
   </section>
@@ -102,7 +102,7 @@
     <div class="wrap">
       <h2>How it works</h2>
       <p class="sub">Strict privilege separation: the only part that runs as root is small, auditable and allow-listed.</p>
-      <figure class="shot arch"><img src="docs/architecture.png" width="2480" height="1120" alt="Architecture: the PYLA UI in the user session talks to SQLite and the Ubuntu Security API, and calls pyla-helper as root through pkexec and polkit; the helper drives ufw, nft and sysctl/modprobe" loading="lazy"></figure>
+      <figure class="shot arch"><a class="zoom" href="docs/architecture.png"><img src="docs/architecture.png" width="2480" height="1120" alt="Architecture: the PYLA UI in the user session talks to SQLite and the Ubuntu Security API, and calls pyla-helper as root through pkexec and polkit; the helper drives ufw, nft and sysctl/modprobe" loading="lazy"></a></figure>
       <div class="flow">
         <div class="step"><span class="tag">Your user</span><h3>PYLA app</h3>
           <p>Rust + Tauri 2. Rule sets in a local SQLite database, diff preview, exposure and CVE views.</p></div>
@@ -169,5 +169,23 @@ packaging/install-desktop.sh       <span class="c"># launcher, no sudo</span></p
     </nav>
   </div>
 </footer>
+<dialog id="lb" aria-label="Image viewer">
+  <button class="lb-close" aria-label="Close" autofocus>&times;</button>
+  <img alt="">
+</dialog>
+<script>
+(() => {
+  const lb = document.getElementById('lb'), img = lb.querySelector('img');
+  if (!lb.showModal) return;                       // browser senza <dialog>: il link apre l'immagine
+  document.querySelectorAll('a.zoom').forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = a.querySelector('img');
+    img.src = a.href; img.alt = t.alt;
+    lb.showModal();
+  }));
+  lb.addEventListener('click', () => lb.close());  // clic ovunque chiude (anche sulla x)
+  lb.addEventListener('close', () => { img.removeAttribute('src'); });
+})();
+</script>
 </body>
 </html>

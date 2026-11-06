@@ -100,3 +100,12 @@ footer nav{display:flex;gap:20px;margin-left:auto}
 footer nav a{color:var(--muted)}
 .shot.arch{margin:0 0 28px}
 .shot.arch img{border-radius:20px}
+/* lightbox */
+a.zoom{display:block;cursor:zoom-in}
+a.zoom img{transition:transform .15s ease, box-shadow .15s ease}
+a.zoom:hover img{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.45)}
+#lb{padding:0;border:0;background:transparent;max-width:96vw;max-height:94vh;overflow:visible}
+#lb::backdrop{background:rgba(5,9,18,.88);backdrop-filter:blur(3px)}
+#lb img{display:block;max-width:96vw;max-height:90vh;width:auto;height:auto;border-radius:12px;border:1px solid var(--line);cursor:zoom-out}
+.lb-close{position:absolute;top:-14px;right:-14px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--surface-2);color:var(--text);font-size:24px;line-height:1;cursor:pointer}
+@media (max-width:600px){.lb-close{top:8px;right:8px}}
