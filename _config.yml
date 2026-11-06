@@ -1,0 +1,7 @@
+# GitHub Pages (pipeline legacy, tema di default): nessuna chiave `theme` per non
+# cambiare l'aspetto attuale. Chiavi usate da jekyll-seo-tag (gia' attivo nel tema).
+title: "PYLA — Protect Your Local Access"
+description: "Open source firewall GUI for Ubuntu: rule set, verifica di esposizione live del kernel, hardening CVE-consapevole. Rust + Tauri."
+image: docs/og-image.png
+logo: docs/logo_icon_400.png
+url: "https://pyla.space"
