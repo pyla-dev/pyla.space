@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security architecture &amp; ISO 27001 — PYLA</title>
+<meta name="description" content="PYLA security architecture on the SABSA 6×6 matrix, and how PYLA supports ISO/IEC 27001:2022 Annex A controls on Ubuntu hosts.">
+<meta property="og:title" content="PYLA — Security architecture &amp; ISO 27001">
+<meta property="og:description" content="SABSA matrix and ISO/IEC 27001:2022 Annex A mapping for PYLA, the open source firewall GUI for Ubuntu.">
+<meta property="og:image" content="https://pyla.space/docs/og-image.png">
+<meta property="og:url" content="https://pyla.space/security.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="canonical" href="https://pyla.space/security.html">
+<link rel="stylesheet" href="docs/site.css">
+<style>
+.page-hero{padding:64px 0 40px}
+.page-hero h1{font-size:clamp(34px,5vw,52px);margin:18px 0 14px}
+.callout{display:flex;gap:14px;align-items:flex-start;background:rgba(255,185,92,.08);border:1px solid rgba(255,185,92,.35);border-radius:16px;padding:16px 18px;color:var(--text);max-width:52em}
+.callout svg{flex:none;width:22px;height:22px;stroke:var(--amber);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
+.callout p{margin:0;font-size:15px}
+.toc{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+tr:last-child td,tr:last-child th{border-bottom:0}
+thead th{background:var(--surface-2);font-size:13px;letter-spacing:.04em;color:var(--text)}
+thead th small{display:block;color:var(--muted);font-weight:400;letter-spacing:0}
+.sabsa{min-width:980px}
+.sabsa tbody th{width:150px;background:var(--surface-2)}
+.sabsa tbody th b{display:block;color:var(--amber);font-size:14px}
+.sabsa tbody th small{color:var(--muted);font-weight:400}
+.sabsa td{color:var(--muted);border-left:1px solid var(--line)}
+.sabsa td code,.iso td code{font:12.5px var(--mono);color:var(--text)}
+.iso{min-width:860px}
+.iso td:first-child{white-space:nowrap;font:600 13px var(--mono);color:var(--amber)}
+.iso td{color:var(--muted)}
+.iso td strong{color:var(--text);font-weight:600}
+.badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.badge.s{background:rgba(87,201,140,.14);color:#7fe0a8}
+.badge.p{background:rgba(255,185,92,.14);color:var(--amber)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:14px;margin:0 0 16px}
+.small{color:var(--muted);font-size:13px;margin-top:16px}
+.hint{display:none;color:var(--muted);font-size:13px;margin:0 0 8px}
+@media (max-width:900px){.hint{display:block}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="shield" viewBox="0 0 24 24">
+      <path d="M12 2.5 19.5 5.3V11c0 4.8-3.1 8.9-7.5 10.2C7.6 19.9 4.5 15.8 4.5 11V5.3z" fill="#ffb95c" stroke="#ffb95c" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M8.7 14.6v-4.6a3.3 3.3 0 0 1 6.6 0v4.6M12 14.6V9M9 17.2h6" fill="none" stroke="#0d1626" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><svg><use href="#shield"/></svg>PYLA</a>
+    <nav class="links">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#screens">Screenshots</a>
+      <a href="index.html#install">Install</a>
+      <a href="security.html" style="color:var(--text)">Security</a>
+      <a class="gh" href="https://github.com/pyla-dev/pyla">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="page-hero">
+    <div class="wrap">
+      <span class="eyebrow">Security architecture · <b>SABSA</b> · <b>ISO/IEC 27001:2022</b></span>
+      <h1>How PYLA fits your security architecture</h1>
+      <p class="lead">Two views for architects and auditors: PYLA laid out on the SABSA 6×6 matrix, and the
+        ISO/IEC 27001:2022 Annex A controls it helps you operate and evidence on Ubuntu hosts.</p>
+      <div class="callout">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.5"/></svg>
+        <p><strong>Support, not certification.</strong> PYLA is a host firewall tool. It does not make an organisation
+          compliant with ISO/IEC 27001 and is not certified against it. The mapping below shows where PYLA can
+          contribute to implementing a control and to collecting evidence; scope, risk treatment and the rest of
+          the ISMS remain yours.</p>
+      </div>
+      <div class="toc">
+        <a class="btn ghost" href="#sabsa">SABSA matrix</a>
+        <a class="btn ghost" href="#iso">ISO 27001 Annex A</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="sabsa">
+    <div class="wrap">
+      <h2>SABSA matrix</h2>
+      <p class="sub">Six layers, from business context down to day-to-day operation, read through the six SABSA questions.
+        Scope: one Ubuntu host protected by PYLA.</p>
+      <p class="hint">Scroll the table sideways →</p>
+      <div class="scroll">
+        <table class="sabsa">
+          <thead><tr>
+            <th>Layer</th>
+            <th>Assets<small>What</small></th>
+            <th>Motivation<small>Why</small></th>
+            <th>Process<small>How</small></th>
+            <th>People<small>Who</small></th>
+            <th>Location<small>Where</small></th>
+            <th>Time<small>When</small></th>
+          </tr></thead>
+          <tbody>
+            <tr><th><b>Contextual</b><small>Business view</small></th>
+              <td>Ubuntu workstations and servers, and the services they expose to a network.</td>
+              <td>An exposed or unpatched host is an entry point. Posture must be known, not assumed.</td>
+              <td>Keep each host's network exposure deliberate, visible and under change control.</td>
+              <td>Machine owners and administrators; small teams and labs without enterprise agents.</td>
+              <td>Home, office, lab and cloud networks the host joins.</td>
+              <td>Continuously, at every change, and whenever a kernel CVE is published.</td></tr>
+            <tr><th><b>Conceptual</b><small>Architect's view</small></th>
+              <td>Host posture: firewall rules, listening services, kernel vulnerability state.</td>
+              <td>Least exposure, least privilege, reversibility of every change.</td>
+              <td>Declarative rule sets; verify before and after apply; mitigate until patched.</td>
+              <td>The user observes; an administrator authorises each privileged action.</td>
+              <td>The host perimeter, per interface and per address family (IPv4 / IPv6).</td>
+              <td>Before a change (preview), during (atomic apply), after (verify or roll back).</td></tr>
+            <tr><th><b>Logical</b><small>Designer's view</small></th>
+              <td>Models for rule sets, the nftables ruleset, listeners and CVEs.</td>
+              <td>Default-deny inbound policy; only allow-listed helper verbs are executable.</td>
+              <td>Diff planner, exposure evaluator (simulated new connection), CVE verdict against the running kernel.</td>
+              <td>Two roles: unprivileged GUI, privileged helper.</td>
+              <td>Input / output / forward chains across UFW, Docker, libvirt and other tables.</td>
+              <td>Apply history, rule backups, CVE data refreshed every 6 hours.</td></tr>
+            <tr><th><b>Physical</b><small>Builder's view</small></th>
+              <td>Local SQLite database; UFW user rules; <code>sysctl.d</code> / <code>modprobe.d</code> files marked as tool-managed.</td>
+              <td>polkit action <code>space.pyla.app.helper</code> requiring admin authentication.</td>
+              <td>Rust core library, Tauri desktop app, <code>pyla-helper</code> speaking JSON in / JSON out.</td>
+              <td>The system's polkit authentication agent.</td>
+              <td><code>/usr/local/libexec/pyla</code>, <code>/var/lib/pyla/backups</code>, user data directory.</td>
+              <td>Backup taken before every apply and restored automatically on mismatch.</td></tr>
+            <tr><th><b>Component</b><small>Tradesman's view</small></th>
+              <td><code>ufw</code>, <code>nftables</code>, <code>sysctl</code>, <code>modprobe</code>, <code>dpkg</code>.</td>
+              <td>Input validation and normalisation; no shell; cleared environment; absolute paths.</td>
+              <td><code>ufw</code> CLI, <code>nft list ruleset</code>, <code>/proc/net/tcp*</code>, Ubuntu Security API.</td>
+              <td>polkit and PAM.</td>
+              <td>Ubuntu 26.04, amd64 <code>.deb</code> package.</td>
+              <td>Each release ships SHA-256 and SHA-512 checksums.</td></tr>
+            <tr><th><b>Operational</b><small>Service manager's view</small></th>
+              <td>Active rule set, backups, mitigation state, watched CVEs.</td>
+              <td>Review exposure; track open CVEs; roll back on any deviation.</td>
+              <td>Preview &amp; apply, mitigate &amp; undo, update via the release package.</td>
+              <td>The administrator approves each privileged operation.</td>
+              <td>Per host today; a fleet console is on the roadmap.</td>
+              <td>Every apply is logged with time and outcome; CVE data shows its retrieval date.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small">SABSA® is a registered trademark of The SABSA Institute. The matrix is used here as a descriptive lens; PYLA is not endorsed by The SABSA Institute.</p>
+    </div>
+  </section>
+
+  <section id="iso">
+    <div class="wrap">
+      <h2>ISO/IEC 27001:2022 — Annex A</h2>
+      <p class="sub">Controls where PYLA contributes on Ubuntu hosts, what it does for each, and the evidence an auditor can see.
+        Control numbers and titles follow ISO/IEC 27001:2022; the descriptions are ours.</p>
+      <div class="legend">
+        <span><span class="badge s">Supports</span> PYLA directly helps implement the control on the host</span>
+        <span><span class="badge p">Partial</span> PYLA covers part of it; other measures are needed</span>
+      </div>
+      <p class="hint">Scroll the table sideways →</p>
+      <div class="scroll">
+        <table class="iso">
+          <thead><tr><th>Control</th><th>Title</th><th>Coverage</th><th>What PYLA does</th><th>Evidence</th></tr></thead>
+          <tbody>
+            <tr><td>A.8.20</td><td><strong>Networks security</strong></td><td><span class="badge s">Supports</span></td>
+              <td>Manages the host firewall as named, ordered rule sets with a default policy, instead of ad-hoc commands.</td>
+              <td>Active rule set, the equivalent <code>ufw</code> commands, the full kernel ruleset.</td></tr>
+            <tr><td>A.8.22</td><td><strong>Segregation of networks</strong></td><td><span class="badge p">Partial</span></td>
+              <td>Rules per interface and source/destination; shows the chains Docker and libvirt add, so host-level segmentation is visible.</td>
+              <td>Rules scoped by interface; read-only view of every table and chain.</td></tr>
+            <tr><td>A.8.8</td><td><strong>Management of technical vulnerabilities</strong></td><td><span class="badge s">Supports</span></td>
+              <td>Lists open high/critical kernel CVEs for the running kernel, verdict per CVE, watch list, reversible subsystem mitigations until the fix is installed.</td>
+              <td>CVE list with status, fixed version and data date; mitigation state per subsystem.</td></tr>
+            <tr><td>A.8.9</td><td><strong>Configuration management</strong></td><td><span class="badge s">Supports</span></td>
+              <td>The intended firewall configuration is stored as a versionable rule set and compared with what is live.</td>
+              <td>Rule sets with "applied" status; diff between intended and live rules.</td></tr>
+            <tr><td>A.8.32</td><td><strong>Change management</strong></td><td><span class="badge s">Supports</span></td>
+              <td>Every change is previewed as a diff, applied atomically, verified, and rolled back automatically if the result differs.</td>
+              <td>Apply history with time and outcome; backups of previous rules.</td></tr>
+            <tr><td>A.8.2</td><td><strong>Privileged access rights</strong></td><td><span class="badge p">Partial</span></td>
+              <td>The GUI never runs as root; each privileged action goes through a dedicated polkit action and an allow-listed helper.</td>
+              <td>polkit policy file; system authentication log entries for the action.</td></tr>
+            <tr><td>A.8.16</td><td><strong>Monitoring activities</strong></td><td><span class="badge p">Partial</span></td>
+              <td>On-demand exposure check of every listening service against the live ruleset; per-rule packet counters.</td>
+              <td>Exposure verdicts per listener (IPv4 / IPv6); ruleset counters. Continuous monitoring is not provided.</td></tr>
+            <tr><td>A.8.15</td><td><strong>Logging</strong></td><td><span class="badge p">Partial</span></td>
+              <td>Logs PYLA's own changes; rules can enable UFW logging. A viewer for blocked traffic is on the roadmap.</td>
+              <td>Apply history; UFW log level shown in the status view.</td></tr>
+            <tr><td>A.8.1</td><td><strong>User endpoint devices</strong></td><td><span class="badge p">Partial</span></td>
+              <td>Brings firewall and kernel-hardening controls to Ubuntu laptops and workstations without an enterprise agent.</td>
+              <td>Per-device rule set, exposure and CVE state.</td></tr>
+            <tr><td>A.8.19</td><td><strong>Installation of software on operational systems</strong></td><td><span class="badge p">Partial</span></td>
+              <td>Distributed as a <code>.deb</code> with published checksums; source and build steps are public.</td>
+              <td>SHA-256 / SHA-512 per release. Packages are not yet GPG-signed.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small">ISO and IEC are trademarks of their respective owners. ISO/IEC 27001 text is not reproduced here; refer to the standard for the normative wording of each control.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="index.html"><svg><use href="#shield"/></svg>PYLA</a>
+    <span>© 2026 The PYLA Project Authors · MIT</span>
+    <nav>
+      <a href="https://github.com/pyla-dev/pyla">GitHub</a>
+      <a href="https://github.com/pyla-dev/pyla/releases">Releases</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="https://www.linkedin.com/company/pyla-space">LinkedIn</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
